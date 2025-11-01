@@ -1,4 +1,3 @@
-# app/services/palette.py
 from PIL import Image
 from collections import Counter
 from typing import List, Dict, Tuple
@@ -6,7 +5,7 @@ import colorsys
 import numpy as np
 
 try:
-    # scikit-image ya está en requirements
+
     from skimage import filters
 except Exception:
     filters = None

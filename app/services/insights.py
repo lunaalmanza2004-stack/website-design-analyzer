@@ -1,4 +1,3 @@
-# app/services/insights.py
 from __future__ import annotations
 from bs4 import BeautifulSoup
 from typing import Dict, List, Tuple

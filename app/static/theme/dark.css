@@ -1,6 +1,5 @@
-/* app/static/theme/dark.css — Tema Oscuro Negro + Azul (bordes cian y radios 8px) */
 :root{
-  /* Base */
+
   --bg:#000000;
   --container-bg:#08082C;
   --surface:#191C38;
@@ -12,12 +11,12 @@
   --text:#FFFFFF;
   --muted:#A8B3CF;
 
-  /* Marca */
+
   --brand:#3B82F6;
   --brand-600:#2563EB;
   --brand-700:#1D4ED8;
 
-  /* Semáforos */
+ 
   --success:#10B981;
   --warning:#F59E0B;
   --danger:#EF4444;
@@ -38,7 +37,7 @@ body{
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
-/* ========= Layout ========= */
+
 .container{
   max-width:1200px;
   margin:0 auto;
@@ -47,7 +46,6 @@ body{
   border-radius: var(--radius);
 }
 
-/* ========= Header / Footer ========= */
 .header{
   position:sticky; top:0; z-index:20;
   backdrop-filter:saturate(120%) blur(6px);
@@ -57,7 +55,7 @@ body{
 .header .brand{display:flex;align-items:center;gap:.6rem;font-weight:600}
 .footer{color:var(--muted)}
 
-/* ========= Chips y Logout (arriba a la derecha) ========= */
+
 .top-links{display:flex; align-items:center; gap:.5rem}
 
 .chip{
@@ -91,7 +89,7 @@ body{
   background:linear-gradient(180deg, var(--brand-600), var(--brand-700));
 }
 
-/* ========= Tarjetas / paneles ========= */
+
 .card{
   background: var(--surface);
   border:1px solid var(--accent-border);
@@ -101,7 +99,7 @@ body{
 }
 .card:hover{border-color: rgba(14,191,255,.32)}
 
-/* ========= Botones ========= */
+
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   padding:.62rem 1rem;border-radius: calc(var(--radius) - 2px);
@@ -134,7 +132,7 @@ body{
 }
 .btn-ghost:hover{background:rgba(59,130,246,.10);border-color:rgba(59,130,246,.25)}
 
-/* ========= Inputs ========= */
+
 .input, .select, .textarea{
   width:100%; color:var(--text);
   background:var(--surface-2);
@@ -146,7 +144,7 @@ body{
 .input:focus{border-color:rgba(14,191,255,.45);box-shadow:0 0 0 3px rgba(14,191,255,.25)}
 label{font-size:.85rem;color:#E5EBFF;margin-bottom:.35rem;display:inline-block}
 
-/* ========= KPIs / badges ========= */
+
 .kpi{font-size:2rem;font-weight:700}
 .kpi-sub{color:var(--muted)}
 .badge{
@@ -161,7 +159,7 @@ label{font-size:.85rem;color:#E5EBFF;margin-bottom:.35rem;display:inline-block}
   background:rgba(59,130,246,.14);color:#DCE7FF;border:1px solid rgba(59,130,246,.28);
 }
 
-/* ========= Grids ========= */
+
 .grid{display:grid;gap:16px}
 .grid-2{grid-template-columns:repeat(2, minmax(0,1fr))}
 .grid-3{grid-template-columns:repeat(3, minmax(0,1fr))}
@@ -171,21 +169,20 @@ label{font-size:.85rem;color:#E5EBFF;margin-bottom:.35rem;display:inline-block}
   .grid-2{grid-template-columns:1fr}
 }
 
-/* ========= Links ========= */
 a{color:#9EC0FF;text-decoration:none}
 a:hover{text-decoration:underline}
 
-/* ========= Imágenes ========= */
+
 img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
 
-/* ========= Tabla simple (historial) ========= */
+
 .table{width:100%;border-collapse:separate;border-spacing:0 10px}
 .table tr td, .table tr th{padding:10px 12px}
 .table thead th{color:#E3EAFF;font-weight:600;border-bottom:1px solid var(--accent-border)}
 .table tbody tr{background:var(--surface);border:1px solid var(--accent-border);border-radius: var(--radius)}
 .table tbody tr:hover{background:#111633}
 
-/* ========= Barras de porcentaje ========= */
+
 .bar{
   width:100%; height:20px; border-radius:999px;
   background:#0E1328; border:1px solid var(--accent-border); overflow:hidden;
@@ -195,12 +192,12 @@ img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
   background:linear-gradient(90deg, var(--brand), var(--brand-700));
   box-shadow: inset 0 0 6px rgba(0,0,0,.25);
 }
-/* Colores por estado */
+
 .bar-fill.bad{background:linear-gradient(90deg, var(--danger), #B91C1C)}
 .bar-fill.warn{background:linear-gradient(90deg, var(--warning), #B45309)}
 .bar-fill.ok{background:linear-gradient(90deg, var(--success), #047857)}
 
-/* ========= Gauge ========= */
+
 .gauge{
   width:64px;height:64px;border-radius:999px;border:1px solid var(--accent-border);
   display:grid;place-items:center;
@@ -211,7 +208,6 @@ img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
   display:grid;place-items:center;font-weight:700;color:#fff;
 }
 
-/* ========= Botón Google ========= */
 .btn-google{
   display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
   background:#FFFFFF; color:#1F2937; border:1px solid var(--accent-border);
@@ -224,7 +220,7 @@ img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
   border-radius:3px; background:#fff;
 }
 
-/* ========= Enlaces bajo formularios ========= */
+
 .auth-links{
   margin-top:12px; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
   color:var(--muted); font-size:.92rem;
@@ -232,23 +228,20 @@ img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
 .auth-links a{color:#CDE2FF; text-decoration:none}
 .auth-links a:hover{text-decoration:underline}
 
-/* ========= Bloques específicos de la cabecera de análisis ========= */
-/* Fila que contiene input a la izquierda y acciones + gauge a la derecha */
+
 .head-row{display:flex; align-items:center; justify-content:space-between; gap:12px}
 
-/* Dentro de la fila, el bloque del formulario ocupa todo y los botones se pegan */
 .input-row{display:flex; align-items:stretch; gap:0; flex:1}
 
-/* Input a la mitad del ancho total */
 .input.half{flex:0 1 50%; max-width:50%}
 
-/* Responsivo: en móvil el input ocupa 100% y los botones bajan */
+
 @media (max-width:900px){
   .head-row{flex-direction:column; align-items:stretch}
   .input.half{max-width:100%; flex:1 1 100%}
 }
 
-/* Pegar botones al input (sin huecos) */
+
 .input-row .input{
   border-top-right-radius:0;
   border-bottom-right-radius:0;
@@ -262,7 +255,7 @@ img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
 }
 .input-row .btn + .btn-outline{border-left:0}
 
-/* ========= Pareja redondita: Download + Export PDF ========= */
+
 .btn-pair{
   display:inline-flex; align-items:center; gap:0;
   border-radius:999px; overflow:hidden;
@@ -272,5 +265,5 @@ img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
 .btn-pair .btn-outline{border-radius:0; border:0; background:var(--surface-2)}
 .btn-pair .btn-outline:hover{background:#121633}
 
-/* ========= Swatches pequeños dentro de badges ========= */
+
 .card .badge:hover{filter:brightness(1.05)}

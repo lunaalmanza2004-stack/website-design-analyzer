@@ -6,13 +6,13 @@
   <title>Website Design Analyzer</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='theme/dark.css') }}">
   <style>
-    /* Evita saltos cuando aparece la barra de loader */
+
     .top-loader{height:0;overflow:hidden;transition:height .18s ease}
     .top-loader.show{height:3px}
   </style>
 </head>
 <body>
-  <!-- Header -->
+
   <header class="header">
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:.75rem 16px;">
       <div class="brand" style="gap:.5rem">
@@ -32,12 +32,10 @@
     </div>
   </header>
 
-  <!-- Main -->
   <main class="container" style="padding:16px 16px 32px 16px;">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- Footer (negro puro, solo el texto indicado) -->
   <footer class="footer" style="background:#000; border-top:0; padding:16px 0;">
     <div class="container" style="background:#000; padding:0">
       © 2025 Website Design Analyzer

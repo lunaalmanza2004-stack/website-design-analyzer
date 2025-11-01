@@ -1,30 +1,19 @@
-﻿# --- Python ---
-__pycache__/
+﻿__pycache__/
 *.py[cod]
 *.egg-info/
 .eggs/
 pip-wheel-metadata/
 dist/
 build/
-
-# Entornos virtuales
 .venv/
 venv/
 ENV/
 env/
-
-# Config
 *.env
 .env.*
 *.sqlite3
 logs/
-
-# VS Code
 .vscode/
-
-# SO
 .DS_Store
 Thumbs.db
-
-# Playwright cache
 playwright/.cache/

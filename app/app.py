@@ -1,4 +1,3 @@
-# app/app.py
 import os
 from datetime import datetime
 
@@ -182,7 +181,7 @@ def google_auth():
     return redirect(url_for('login'))
 
 
-# ------------------ Analyze ------------------------------------------
+
 @app.post("/analyze")
 def analyze():
     if not session.get('user'):
@@ -259,10 +258,10 @@ def analyze():
             if analyze_responsive:    insights['responsive']    = analyze_responsive(html)
             if analyze_accessibility: insights['accessibility'] = analyze_accessibility(html)
         except Exception:
-            # si algo rompe aquí, seguimos sin insights
+           
             pass
 
-        # ----- PDF (usa tu report.build_pdf con la firma que enviaste)
+       
         build_pdf(
             pdf_path,
             shot_path,
@@ -355,5 +354,5 @@ def health():
 
 # ----------------------------------------------------------------------
 if __name__ == "__main__":
-    # Arranca directo sin Flask CLI para evitar problemas de FLASK_APP
+
     app.run(debug=True, host="127.0.0.1", port=5000)

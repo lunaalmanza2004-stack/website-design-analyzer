@@ -5,7 +5,7 @@ import asyncio
 from playwright.async_api import async_playwright
 from .utils import ensure_dir
 
-# En Windows usa Proactor (soporta subprocess)
+ (soporta subprocess)
 if sys.platform.startswith("win"):
     try:
         asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
@@ -29,7 +29,7 @@ async def _shoot(url: str, out_path: str, width=1440, height=900):
             )
         )
         page = await context.new_page()
-        # Cargar la página (algunas webs bloquean 'networkidle'); usa domcontentloaded y espera un poco.
+       (algunas webs bloquean 'networkidle');
         await page.goto(url, wait_until="domcontentloaded", timeout=60000)
         try:
             await page.wait_for_load_state("networkidle", timeout=15000)
@@ -42,7 +42,7 @@ async def _shoot(url: str, out_path: str, width=1440, height=900):
         return {"title": title, "html": html}
 
 def capture_screenshot(url: str, out_path: str):
-    # Ejecuta la corrutina con un loop válido en cualquier hilo.
+   
     try:
         return asyncio.run(_shoot(url, out_path))
     except RuntimeError:

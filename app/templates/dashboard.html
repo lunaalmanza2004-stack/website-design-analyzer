@@ -4,11 +4,11 @@
 {% set current_tab = request.args.get('tab', 'overview') %}
 {% set last = history[0] if history else None %}
 
-<!-- Tarjeta superior: input + par redondito (Analyze/History) a la izquierda; gauge a la derecha -->
+
 <div class="card analyze-head">
   <div class="head-row" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
 
-    <!-- IZQ: Input + par redondito -->
+   
     <form action="{{ url_for('analyze') }}" method="post"
           style="display:flex; align-items:center; gap:10px; flex:1 1 680px">
       <input name="url"
@@ -19,7 +19,7 @@
              aria-label="Website URL"
              value="{{ request.values.get('url') or (last.url if last and last.url is defined else '') }}"
              style="border-radius:999px; padding:.7rem 1rem">
-      <!-- par redondito (Analyze / History) -->
+      
       <div class="btn-pair"
            style="display:flex; gap:0; border:1px solid var(--accent-border); border-radius:999px; overflow:hidden">
         <button class="btn" type="submit" title="Run analysis"
@@ -31,7 +31,7 @@
       </div>
     </form>
 
-    <!-- DER: Gauge más grande -->
+   
     {% if last %}
       <div class="gauge"
            style="width:88px; height:88px; border-radius:999px; border:1px solid var(--accent-border);
@@ -51,12 +51,12 @@
 
 <div class="grid grid-2" style="gap:16px; margin-top:16px">
 
-  <!-- IZQUIERDA -->
+  
   <div class="grid" style="gap:16px">
     {% if history %}
       {% set last = history[0] %}
 
-      <!-- Top Colors -->
+   
       <div class="card">
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:.4rem">
           <div class="badge">Top Colors</div>
@@ -99,10 +99,10 @@
         {% endif %}
       </div>
 
-      <!-- Insights + breakdown -->
+    
       <div class="card">
         <div class="grid grid-2" style="gap:12px">
-          <!-- Typography -->
+       
           <div class="card" style="padding:14px">
             <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#60A5FA" aria-hidden="true"><path d="M4 20h2.7l1.6-4h7.4l1.6 4H20L13.8 4h-3.6L4 20Zm6.1-6 2.9-7.2L16 14h-5.9Z"/></svg>
@@ -119,7 +119,7 @@
             </div>
           </div>
 
-          <!-- Layout -->
+   
           <div class="card" style="padding:14px">
             <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#FBBF24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
@@ -133,7 +133,7 @@
         </div>
 
         <div class="grid grid-2" style="margin-top:14px; gap:12px">
-          <!-- Responsive -->
+      
           <div class="card" style="padding:14px">
             <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#34D399" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 2 2v8h-2V6H6v12h6v2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm13 12h3v4h-8v-4h3v-1h2v1Z"/></svg>
@@ -146,7 +146,7 @@
             <div class="kpi-sub" style="font-size:.85rem"><b>TW breakpoints:</b> sm={{ tw.get('sm',0) }}, md={{ tw.get('md',0) }}, lg={{ tw.get('lg',0) }}, xl={{ tw.get('xl',0) }}, 2xl={{ tw.get('2xl',0) }}</div>
           </div>
 
-          <!-- A11y -->
+       
           <div class="card" style="padding:14px">
             <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#A78BFA" aria-hidden="true"><path d="M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-7 5h14v2h-5v9h-2v-5H9v5H7v-9H5V9Z"/></svg>
@@ -162,7 +162,7 @@
     {% endif %}
   </div>
 
-  <!-- DERECHA: screenshot + breakdown + tips -->
+ 
   <div class="card">
     {% if history %}
       {% set last = history[0] %}
@@ -172,7 +172,7 @@
           <div class="kpi-sub" style="font-size:.8rem">Analyzed {{ last.when }}</div>
         </div>
 
-        <!-- PAREJA REDONDITA (Download / PDF) -->
+
         <div class="btn-pair" role="group" aria-label="Export options"
              style="display:flex; gap:0; border:1px solid var(--accent-border); border-radius:999px; overflow:hidden">
           <a href="{{ url_for('download_file', when=last.when, kind='screenshot') }}"
@@ -229,7 +229,7 @@
       {% if last.tips %}
         <div class="card" style="margin-top:14px">
           <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.3rem">
-            <!-- “botón” más grande con borde rojito -->
+        
             <span class="btn-outline"
                   style="border-color: var(--danger); color:#fff; padding:.4rem 1rem; font-weight:600; border-width:1px">
               Recommendations

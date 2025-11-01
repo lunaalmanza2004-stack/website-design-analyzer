@@ -13,14 +13,14 @@ def _relative_luminance(rgb):
     return 0.2126*a[...,0] + 0.7152*a[...,1] + 0.0722*a[...,2]
 
 def analyze_image_colors(pil_image: Image.Image):
-    # Sample pixels on a grid
+   
     img = pil_image.resize((256, int(256*pil_image.height/pil_image.width)))
     arr = np.array(img)[..., :3]
-    # Estimate overall contrast (stdev of luminance) and dominant hues (k-means-like bins)
+    (stdev of luminance) and dominant hues (k-means-like bins)
 
     lum = _relative_luminance(arr)
     contrast = float(np.std(lum))
-    # Simulate color harmony by counting distinct hue bins
+   
     hsv = np.array(Image.fromarray(arr.astype('uint8')).convert('HSV'))
     hue_bins = np.histogram(hsv[...,0], bins=12, range=(0,255))[0]
     diversity = (hue_bins>arr.size*0.0005).sum() / 12.0
