@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="min-height:calc(100vh - 120px); display:grid; place-items:center; padding:40px 16px">
+  <div class="card" style="width:min(520px, 100%); padding:24px">
+    <h2 style="margin:0 0 .25rem 0">Reset password</h2>
+    <p class="kpi-sub" style="margin:0 0 1rem 0">Enter your email and we’ll send a reset link (demo).</p>
+
+    <form action="{{ url_for('forgot_post') }}" method="post" style="display:grid; gap:.75rem">
+      <div>
+        <label>Email</label>
+        <input class="input" type="email" name="email" required>
+      </div>
+      <button class="btn" type="submit" style="width:100%">Send reset link</button>
+    </form>
+
+    <div class="auth-links">
+      <a href="{{ url_for('login') }}">Back to sign in</a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="card" style="margin-top:12px; padding:12px">
+          {% for m in messages %}<div>{{ m }}</div>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+</div>
+{% endblock %}

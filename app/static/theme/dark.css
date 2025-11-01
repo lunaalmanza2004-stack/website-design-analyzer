@@ -1,0 +1,276 @@
+/* app/static/theme/dark.css — Tema Oscuro Negro + Azul (bordes cian y radios 8px) */
+:root{
+  /* Base */
+  --bg:#000000;
+  --container-bg:#08082C;
+  --surface:#191C38;
+  --surface-2:#0F1222;
+  --border:#0f1018;
+  --accent-border: rgba(14,191,255,.20);
+  --radius:8px;
+
+  --text:#FFFFFF;
+  --muted:#A8B3CF;
+
+  /* Marca */
+  --brand:#3B82F6;
+  --brand-600:#2563EB;
+  --brand-700:#1D4ED8;
+
+  /* Semáforos */
+  --success:#10B981;
+  --warning:#F59E0B;
+  --danger:#EF4444;
+
+  /* Sombras */
+  --shadow: 0 10px 30px rgba(0, 1, 1, 0.899);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.12), transparent 60%),
+    radial-gradient(1000px 500px at -10% 110%, rgba(37,99,235,.14), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+/* ========= Layout ========= */
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px;
+  background: var(--container-bg);
+  border-radius: var(--radius);
+}
+
+/* ========= Header / Footer ========= */
+.header{
+  position:sticky; top:0; z-index:20;
+  backdrop-filter:saturate(120%) blur(6px);
+  background:rgba(0,0,0,.65);
+  border-bottom:1px solid var(--accent-border);
+}
+.header .brand{display:flex;align-items:center;gap:.6rem;font-weight:600}
+.footer{color:var(--muted)}
+
+/* ========= Chips y Logout (arriba a la derecha) ========= */
+.top-links{display:flex; align-items:center; gap:.5rem}
+
+.chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.42rem .8rem; border-radius:999px;
+  font-weight:600; font-size:.86rem; line-height:1;
+  background:var(--surface-2);
+  border:1px solid var(--accent-border);
+  color:#DCE7FF; text-decoration:none;
+  transition:background .15s ease, border-color .15s ease, color .15s ease, transform .06s ease;
+}
+.chip:hover{ background:#121633; border-color:rgba(14,191,255,.35); }
+.chip.active{
+  background:rgba(59,130,246,.16);
+  border-color:rgba(59,130,246,.40);
+  color:#E8F1FF;
+}
+
+.btn-logout{
+  display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  padding:.42rem .9rem; border-radius:999px;
+  border:1px solid transparent;
+  background:linear-gradient(180deg, var(--brand), var(--brand-600));
+  color:#fff; font-weight:700; font-size:.86rem; text-decoration:none;
+  box-shadow:0 6px 22px rgba(37,99,235,.30);
+  transition:transform .08s ease, box-shadow .2s ease, background .15s ease;
+}
+.btn-logout:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 28px rgba(37,99,235,.38);
+  background:linear-gradient(180deg, var(--brand-600), var(--brand-700));
+}
+
+/* ========= Tarjetas / paneles ========= */
+.card{
+  background: var(--surface);
+  border:1px solid var(--accent-border);
+  border-radius: var(--radius);
+  padding:18px;
+  box-shadow: var(--shadow);
+}
+.card:hover{border-color: rgba(14,191,255,.32)}
+
+/* ========= Botones ========= */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.62rem 1rem;border-radius: calc(var(--radius) - 2px);
+  border:1px solid transparent;
+  background:linear-gradient(180deg, var(--brand), var(--brand-600));
+  color:#FFFFFF;text-decoration:none;font-weight:700;
+  letter-spacing:.2px;
+  transition:transform .08s ease, box-shadow .2s ease, background .15s ease, border-color .15s ease;
+  box-shadow:0 6px 22px rgba(37, 99, 235, .30);
+}
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 28px rgba(37, 99, 235, .38);
+  background:linear-gradient(180deg, var(--brand-600), var(--brand-700));
+}
+.btn:active{transform:translateY(0)}
+
+.btn-outline{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.62rem 1rem;border-radius: calc(var(--radius) - 2px);
+  border:1px solid var(--accent-border);
+  background:var(--surface-2); color:#E6ECFF; text-decoration:none; font-weight:600;
+}
+.btn-outline:hover{border-color:rgba(14,191,255,.35);background:#121633}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:.5rem;color:#DCE7FF;
+  padding:.5rem .75rem;border-radius: calc(var(--radius) - 4px);
+  background:transparent;border:1px solid transparent;
+}
+.btn-ghost:hover{background:rgba(59,130,246,.10);border-color:rgba(59,130,246,.25)}
+
+/* ========= Inputs ========= */
+.input, .select, .textarea{
+  width:100%; color:var(--text);
+  background:var(--surface-2);
+  border:1px solid var(--accent-border);
+  border-radius: var(--radius);
+  padding:.62rem .8rem; outline:none;
+}
+.input::placeholder{color:#C9D2EC}
+.input:focus{border-color:rgba(14,191,255,.45);box-shadow:0 0 0 3px rgba(14,191,255,.25)}
+label{font-size:.85rem;color:#E5EBFF;margin-bottom:.35rem;display:inline-block}
+
+/* ========= KPIs / badges ========= */
+.kpi{font-size:2rem;font-weight:700}
+.kpi-sub{color:var(--muted)}
+.badge{
+  display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;
+  padding:.25rem .55rem;border-radius:999px;
+  background:#0E1328;border:1px solid var(--accent-border);
+  color:#D6DEFF;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:.375rem;
+  font-size:.72rem;padding:.25rem .6rem;border-radius:999px;
+  background:rgba(59,130,246,.14);color:#DCE7FF;border:1px solid rgba(59,130,246,.28);
+}
+
+/* ========= Grids ========= */
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3, minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4, minmax(0,1fr))}
+@media (max-width: 900px){
+  .grid-3,.grid-4{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+}
+
+/* ========= Links ========= */
+a{color:#9EC0FF;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ========= Imágenes ========= */
+img.rounded{border-radius: var(--radius); border:1px solid var(--accent-border)}
+
+/* ========= Tabla simple (historial) ========= */
+.table{width:100%;border-collapse:separate;border-spacing:0 10px}
+.table tr td, .table tr th{padding:10px 12px}
+.table thead th{color:#E3EAFF;font-weight:600;border-bottom:1px solid var(--accent-border)}
+.table tbody tr{background:var(--surface);border:1px solid var(--accent-border);border-radius: var(--radius)}
+.table tbody tr:hover{background:#111633}
+
+/* ========= Barras de porcentaje ========= */
+.bar{
+  width:100%; height:20px; border-radius:999px;
+  background:#0E1328; border:1px solid var(--accent-border); overflow:hidden;
+}
+.bar-fill{
+  height:100%;
+  background:linear-gradient(90deg, var(--brand), var(--brand-700));
+  box-shadow: inset 0 0 6px rgba(0,0,0,.25);
+}
+/* Colores por estado */
+.bar-fill.bad{background:linear-gradient(90deg, var(--danger), #B91C1C)}
+.bar-fill.warn{background:linear-gradient(90deg, var(--warning), #B45309)}
+.bar-fill.ok{background:linear-gradient(90deg, var(--success), #047857)}
+
+/* ========= Gauge ========= */
+.gauge{
+  width:64px;height:64px;border-radius:999px;border:1px solid var(--accent-border);
+  display:grid;place-items:center;
+  background:conic-gradient(var(--brand) 0deg, #2a2f44 0);
+}
+.gauge-inner{
+  width:46px;height:46px;border-radius:999px;background:var(--surface);
+  display:grid;place-items:center;font-weight:700;color:#fff;
+}
+
+/* ========= Botón Google ========= */
+.btn-google{
+  display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+  background:#FFFFFF; color:#1F2937; border:1px solid var(--accent-border);
+  border-radius: calc(var(--radius) - 2px); padding:.62rem 1rem;
+  font-weight:700; text-decoration:none;
+}
+.btn-google:hover{filter:brightness(.98); border-color:rgba(14,191,255,.35)}
+.btn-google .g-logo{
+  width:18px; height:18px; display:inline-grid; place-items:center;
+  border-radius:3px; background:#fff;
+}
+
+/* ========= Enlaces bajo formularios ========= */
+.auth-links{
+  margin-top:12px; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+  color:var(--muted); font-size:.92rem;
+}
+.auth-links a{color:#CDE2FF; text-decoration:none}
+.auth-links a:hover{text-decoration:underline}
+
+/* ========= Bloques específicos de la cabecera de análisis ========= */
+/* Fila que contiene input a la izquierda y acciones + gauge a la derecha */
+.head-row{display:flex; align-items:center; justify-content:space-between; gap:12px}
+
+/* Dentro de la fila, el bloque del formulario ocupa todo y los botones se pegan */
+.input-row{display:flex; align-items:stretch; gap:0; flex:1}
+
+/* Input a la mitad del ancho total */
+.input.half{flex:0 1 50%; max-width:50%}
+
+/* Responsivo: en móvil el input ocupa 100% y los botones bajan */
+@media (max-width:900px){
+  .head-row{flex-direction:column; align-items:stretch}
+  .input.half{max-width:100%; flex:1 1 100%}
+}
+
+/* Pegar botones al input (sin huecos) */
+.input-row .input{
+  border-top-right-radius:0;
+  border-bottom-right-radius:0;
+  border-right:0;
+}
+.input-row .btn,
+.input-row .btn-outline{
+  border-top-left-radius:0;
+  border-bottom-left-radius:0;
+  white-space:nowrap;
+}
+.input-row .btn + .btn-outline{border-left:0}
+
+/* ========= Pareja redondita: Download + Export PDF ========= */
+.btn-pair{
+  display:inline-flex; align-items:center; gap:0;
+  border-radius:999px; overflow:hidden;
+  border:1px solid var(--accent-border);
+}
+.btn-pair .btn{border-radius:0; border:0}
+.btn-pair .btn-outline{border-radius:0; border:0; background:var(--surface-2)}
+.btn-pair .btn-outline:hover{background:#121633}
+
+/* ========= Swatches pequeños dentro de badges ========= */
+.card .badge:hover{filter:brightness(1.05)}

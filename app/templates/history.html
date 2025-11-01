@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">History</h2>
+<div class="grid gap-4">
+  {% if history %}
+    {% for h in history %}
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-medium">{{ h.url }}</div>
+          <div class="text-xs text-slate-500">{{ h.when }}</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="pill">{{ h.overall }}/100 — {{ h.label }}</span>
+          <div class="btn-group" role="group" aria-label="Export">
+            <a href="{{ url_for('download_file', when=h.when, kind='screenshot') }}" class="btn-outline">Screenshot</a>
+            <a href="{{ url_for('download_file', when=h.when, kind='pdf') }}" class="btn">Export PDF</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="card">No history yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

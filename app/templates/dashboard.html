@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% set current_tab = request.args.get('tab', 'overview') %}
+{% set last = history[0] if history else None %}
+
+<!-- Tarjeta superior: input + par redondito (Analyze/History) a la izquierda; gauge a la derecha -->
+<div class="card analyze-head">
+  <div class="head-row" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+
+    <!-- IZQ: Input + par redondito -->
+    <form action="{{ url_for('analyze') }}" method="post"
+          style="display:flex; align-items:center; gap:10px; flex:1 1 680px">
+      <input name="url"
+             type="url"
+             placeholder=""
+             required
+             class="input half"
+             aria-label="Website URL"
+             value="{{ request.values.get('url') or (last.url if last and last.url is defined else '') }}"
+             style="border-radius:999px; padding:.7rem 1rem">
+      <!-- par redondito (Analyze / History) -->
+      <div class="btn-pair"
+           style="display:flex; gap:0; border:1px solid var(--accent-border); border-radius:999px; overflow:hidden">
+        <button class="btn" type="submit" title="Run analysis"
+                style="border-radius:0; padding:.62rem 1.1rem">Analyze</button>
+        <a class="btn-outline" href="{{ url_for('history') }}" role="button" title="See history"
+           style="border-left:1px solid var(--accent-border); border-radius:0; padding:.62rem 1.1rem">
+          Analysis history
+        </a>
+      </div>
+    </form>
+
+    <!-- DER: Gauge más grande -->
+    {% if last %}
+      <div class="gauge"
+           style="width:88px; height:88px; border-radius:999px; border:1px solid var(--accent-border);
+                  display:grid; place-items:center;
+                  background: conic-gradient(var(--brand) {{ last.overall_deg }}deg, #2a2f44 0);">
+        <div class="gauge-inner"
+             style="width:64px; height:64px; border-radius:999px; background:var(--surface);
+                    display:grid; place-items:center; font-weight:700; color:#fff;">
+          {{ last.overall }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <p class="kpi-sub" style="margin:.75rem 0 0 0">Enter a website URL to generate a full design assessment.</p>
+</div>
+
+<div class="grid grid-2" style="gap:16px; margin-top:16px">
+
+  <!-- IZQUIERDA -->
+  <div class="grid" style="gap:16px">
+    {% if history %}
+      {% set last = history[0] %}
+
+      <!-- Top Colors -->
+      <div class="card">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:.4rem">
+          <div class="badge">Top Colors</div>
+          <div class="kpi-sub" style="font-size:.8rem">Dominant + brand hints (saturated & edge-aware)</div>
+        </div>
+
+        {% set pal = last.palette or [] %}
+        {% set top = pal[:6] %}
+        {% if top %}
+          <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:8px; margin-bottom:10px">
+            {% for c in top %}
+              <div title="{{ c.hex }}{% if c.pct %} — {{ c.pct }}%{% endif %}" style="
+                  height:36px; border-radius:var(--radius); border:1px solid var(--accent-border); position:relative;
+                  background: {{ c.hex }};">
+                <div style="
+                    position:absolute; bottom:4px; left:6px; right:6px;
+                    padding:2px 6px; font-size:.72rem; border-radius:8px;
+                    background:rgba(0,0,0,.38); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.4);
+                    display:flex; align-items:center; justify-content:space-between;">
+                  <span>{{ c.hex }}</span><span>{{ c.pct if c.pct else 'hint' }}</span>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="kpi-sub">—</div>
+        {% endif %}
+
+        {% set rest = pal[6:] %}
+        {% if rest %}
+          <div style="display:flex; flex-wrap:wrap; gap:8px">
+            {% for c in rest %}
+              <div class="badge" title="{{ c.hex }}{% if c.pct %} — {{ c.pct }}%{% endif %}">
+                <span style="width:16px; height:16px; border-radius:6px; display:inline-block; border:1px solid #0005; background: {{ c.hex }}"></span>
+                <span style="font-weight:600">{{ c.hex }}</span>
+                <span style="opacity:.8">{{ c.pct if c.pct else 'hint' }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Insights + breakdown -->
+      <div class="card">
+        <div class="grid grid-2" style="gap:12px">
+          <!-- Typography -->
+          <div class="card" style="padding:14px">
+            <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#60A5FA" aria-hidden="true"><path d="M4 20h2.7l1.6-4h7.4l1.6 4H20L13.8 4h-3.6L4 20Zm6.1-6 2.9-7.2L16 14h-5.9Z"/></svg>
+              <div style="font-weight:700">Typography details</div>
+            </div>
+            {% set ty = last.insights['typography'] if last.insights and 'typography' in last.insights else {} %}
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Families:</b> {{ (ty.get('families') or [])|join(', ') or '—' }}</div>
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Sizes (samples):</b> {{ (ty.get('sizes') or [])|join(', ') or '—' }}</div>
+            {% set h = ty.get('headings') or {} %}
+            <div class="kpi-sub" style="font-size:.85rem">
+              <b>Headings:</b>
+              H1={{ h.get('h1',0) }}, H2={{ h.get('h2',0) }}, H3={{ h.get('h3',0) }},
+              H4={{ h.get('h4',0) }}, H5={{ h.get('h5',0) }}, H6={{ h.get('h6',0) }}
+            </div>
+          </div>
+
+          <!-- Layout -->
+          <div class="card" style="padding:14px">
+            <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#FBBF24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+              <div style="font-weight:700">Layout snapshot</div>
+            </div>
+            {% set lo = last.insights['layout'] if last.insights and 'layout' in last.insights else {} %}
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Whitespace:</b> {{ lo.get('whitespace_pct','—') }}{% if lo.get('whitespace_pct') is not none %}%{% endif %}</div>
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Grid:</b> {{ 'Yes' if lo.get('grid') else 'No' }} • <b>Flex:</b> {{ 'Yes' if lo.get('flex') else 'No' }}</div>
+            <div class="kpi-sub" style="font-size:.85rem">{{ lo.get('notes','—') }}</div>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:14px; gap:12px">
+          <!-- Responsive -->
+          <div class="card" style="padding:14px">
+            <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#34D399" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 2 2v8h-2V6H6v12h6v2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm13 12h3v4h-8v-4h3v-1h2v1Z"/></svg>
+              <div style="font-weight:700">Responsive</div>
+            </div>
+            {% set rp = last.insights['responsive'] if last.insights and 'responsive' in last.insights else {} %}
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Viewport meta:</b> {{ 'Yes' if rp.get('viewport') else 'No' }}</div>
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Media queries:</b> {{ rp.get('media_queries','—') }}</div>
+            {% set tw = rp.get('tw', {}) %}
+            <div class="kpi-sub" style="font-size:.85rem"><b>TW breakpoints:</b> sm={{ tw.get('sm',0) }}, md={{ tw.get('md',0) }}, lg={{ tw.get('lg',0) }}, xl={{ tw.get('xl',0) }}, 2xl={{ tw.get('2xl',0) }}</div>
+          </div>
+
+          <!-- A11y -->
+          <div class="card" style="padding:14px">
+            <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#A78BFA" aria-hidden="true"><path d="M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-7 5h14v2h-5v9h-2v-5H9v5H7v-9H5V9Z"/></svg>
+              <div style="font-weight:700">Accessibility</div>
+            </div>
+            {% set a = last.insights['accessibility'] if last.insights and 'accessibility' in last.insights else {} %}
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>Images:</b> {{ a.get('images_total','—') }} (missing alt: {{ a.get('images_without_alt','—') }})</div>
+            <div class="kpi-sub" style="font-size:.85rem;margin-bottom:.4rem"><b>ARIA attrs:</b> {{ a.get('aria_attrs','—') }} • <b>roles:</b> {{ a.get('roles','—') }}</div>
+            <div class="kpi-sub" style="font-size:.85rem"><b>Labels:</b> {{ a.get('labels','—') }}</div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- DERECHA: screenshot + breakdown + tips -->
+  <div class="card">
+    {% if history %}
+      {% set last = history[0] %}
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:.6rem">
+        <div>
+          <div class="badge">Latest Screenshot</div>
+          <div class="kpi-sub" style="font-size:.8rem">Analyzed {{ last.when }}</div>
+        </div>
+
+        <!-- PAREJA REDONDITA (Download / PDF) -->
+        <div class="btn-pair" role="group" aria-label="Export options"
+             style="display:flex; gap:0; border:1px solid var(--accent-border); border-radius:999px; overflow:hidden">
+          <a href="{{ url_for('download_file', when=last.when, kind='screenshot') }}"
+             class="btn-outline" style="border-radius:0; padding:.62rem 1.1rem">Download</a>
+          <a href="{{ url_for('download_file', when=last.when, kind='pdf') }}"
+             class="btn" style="border-left:1px solid var(--accent-border); border-radius:0; padding:.62rem 1.1rem">Export PDF</a>
+        </div>
+      </div>
+
+      <div style="max-height:420px; overflow:auto; border-radius:var(--radius); border:1px solid var(--accent-border);">
+        <img src="{{ url_for('download_file', when=last.when, kind='screenshot') }}" style="width:100%; display:block" alt="screenshot"/>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="grid grid-2" style="gap:12px">
+          {% for k, v in last.breakdown.items() %}
+            {% set key = k|lower %}
+            {% set color = '#60A5FA' %}
+            {% set icon = 'typo' %}
+            {% if 'color' in key or 'contrast' in key %}{% set color = '#F87171' %}{% set icon='palette' %}{% endif %}
+            {% if 'layout' in key or 'structure' in key or 'estructura' in key or 'diseño' in key %}{% set color = '#FBBF24' %}{% set icon='grid' %}{% endif %}
+            {% if 'responsive' in key %}{% set color = '#34D399' %}{% set icon='device' %}{% endif %}
+            {% if 'access' in key or 'accesib' in key %}{% set color = '#A78BFA' %}{% set icon='a11y' %}{% endif %}
+
+            {% set vi = (v|int) %}
+            {% set bar_class = 'ok' if vi >= 67 else ('warn' if vi >= 45 else 'bad') %}
+
+            <div class="card" style="padding:14px">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:.4rem">
+                <div style="display:flex; align-items:center; gap:.6rem">
+                  {% if icon == 'typo' %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ color }}"><path d="M4 20h2.7l1.6-4h7.4l1.6 4H20L13.8 4h-3.6L4 20Zm6.1-6 2.9-7.2L16 14h-5.9Z"/></svg>
+                  {% elif icon == 'palette' %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ color }}"><path d="M12 3a9 9 0 0 0 0 18h3a3 3 0 0 0 3-3c0-1.1-.9-2-2-2h-1a3 3 0 1 1 0-6h1a2 2 0 0 0 2-2 5 5 0 0 0-5-5Zm-5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>
+                  {% elif icon == 'grid' %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ color }}"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+                  {% elif icon == 'device' %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ color }}"><path d="M6 4h11a2 2 0 0 1 2 2v8h-2V6H6v12h6v2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm13 12h3v4h-8v-4h3v-1h2v1Z"/></svg>
+                  {% elif icon == 'a11y' %}
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ color }}"><path d="M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-7 5h14v2h-5v9h-2v-5H9v5H7v-9H5V9Z"/></svg>
+                  {% endif %}
+                  <div class="kpi-sub" style="font-size:.9rem">{{ k }}</div>
+                </div>
+                <div class="kpi-sub" style="font-size:.9rem; font-weight:700">{{ vi }}/100</div>
+              </div>
+              <div class="bar">
+                <div class="bar-fill {{ bar_class }}" style="width: {{ vi }}%"></div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if last.tips %}
+        <div class="card" style="margin-top:14px">
+          <div style="display:flex; align-items:center; gap:.5rem; margin-bottom:.3rem">
+            <!-- “botón” más grande con borde rojito -->
+            <span class="btn-outline"
+                  style="border-color: var(--danger); color:#fff; padding:.4rem 1rem; font-weight:600; border-width:1px">
+              Recommendations
+            </span>
+          </div>
+          <ul style="margin-left:1.1rem; display:grid; gap:.35rem">
+            {% for tip in last.tips %}<li>{{ tip }}</li>{% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="badge">No analysis yet</div>
+      <p class="kpi-sub" style="margin-top:.5rem">Run your first analysis to see the screenshot here.</p>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}
